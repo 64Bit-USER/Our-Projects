@@ -1,4 +1,4 @@
-import React from 'react'
+import Notes from './Notes';
 
 export const Home = () => {
     return (
@@ -21,8 +21,8 @@ export const Home = () => {
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+                <Notes />
             </div>
-            <h1>Your Notes</h1>
         </div>
     )
 }
