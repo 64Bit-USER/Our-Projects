@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = (props) => {
 
     const url = 'http://localhost:5000'
 
@@ -24,9 +24,10 @@ const Signup = () => {
             // Save the auth token and redirect
             localStorage.setItem('authToken', json.authToken);
             history.push("/");
+            props.showAlert("Welcome to INotebook", "success");
         }
         else {
-            alert("Invalid Credentials");
+            props.showAlert("Invalid Details", "danger");
         }
     };
 
@@ -46,7 +47,7 @@ const Signup = () => {
                         <input type="email" className="form-control" id="email" placeholder="name@example.com" onChange={onChange} name="email" />
                         <label htmlFor="floatingInput">Email address</label>
                     </div>
-                    <div className="form-floating">
+                    <div className="form-floating mb-3">
                         <input type="password" className="form-control" id="password" placeholder="Password" onChange={onChange} name="password" minLength={5} required />
                         <label htmlFor="password">Password</label>
                     </div>

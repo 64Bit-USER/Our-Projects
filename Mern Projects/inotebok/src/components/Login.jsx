@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
     const url = 'http://localhost:5000'
 
     const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -20,10 +20,11 @@ const Login = () => {
         if (json.success) {
             // Save the auth token and redirect
             localStorage.setItem('authToken', json.authToken);
+            props.showAlert("Welcome Back to INotebook", "success");
             history.push("/");
         }
         else {
-            alert("Invalid Credentials");
+            props.showAlert("Invalid Credentials", "danger");
         }
     };
 
