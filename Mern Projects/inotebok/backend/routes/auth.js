@@ -14,16 +14,17 @@ router.post('/createuser', [
     body('name', 'Enter a valid Name').isLength({ min: 3 }),
     body('password', 'Password needs to be atleast 5 characters').isLength({ min: 5 })
 ], async (req, res) => {
+    let success = false;
     // If there are errors the return bad request and errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ success, errors: errors.array() });
     }
 
     try {
         let user = await User.findOne({ email: req.body.email })
         if (user) {
-            return res.status(400).json({ error: "This user exists already." })
+            return res.status(400).json({ success, error: "This user exists already." })
         }
         // Using salt
         const salt = await bcrypt.genSalt(10);
@@ -43,7 +44,8 @@ router.post('/createuser', [
         const authToken = jwt.sign(data, JWT_SECRET);
         console.log(`Token: ${authToken}`);
 
-        res.json({ authToken });
+        let success = true;
+        res.json({ success, authToken });
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Some Error Occured");
@@ -55,6 +57,7 @@ router.post('/login', [
     body('email', 'Enter a valid Email').isEmail(),
     body('password', 'Password caonnot be blank').exists(),
 ], async (req, res) => {
+    let success = false;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -63,11 +66,11 @@ router.post('/login', [
     try {
         let user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ error: "Please try to login with correct credentials." });
+            return res.status(400).json({ success, error: "Please try to login with correct email." });
         }
         const passwordComparison = await bcrypt.compare(password, user.password);
         if (!passwordComparison) {
-            return res.status(400).json({ error: "Please try to login with correct credentials." });
+            return res.status(400).json({ success, error: "Please try to login with correct password." });
         }
         const data = {
             user: {
@@ -75,7 +78,8 @@ router.post('/login', [
             }
         }
         const authToken = jwt.sign(data, JWT_SECRET);
-        res.json({ authToken });
+        success = true;
+        res.json({ success, authToken });
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Some Internal Error Occured");
