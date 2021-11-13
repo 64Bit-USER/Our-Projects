@@ -53,7 +53,7 @@ router.post('/createuser', [
 });
 
 // Matcing Users' credentials in database and let the login using POST
-router.post('/login', [
+router.post('/', [
     body('email', 'Enter a valid Email').isEmail(),
     body('password', 'Password caonnot be blank').exists(),
 ], async (req, res) => {

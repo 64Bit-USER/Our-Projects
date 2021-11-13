@@ -29,13 +29,13 @@ function App() {
           <div className="container">
             <Switch>
               <Route exact path="/">
-                <Home showAlert={showAlert} />
+                <Login showAlert={showAlert} />
               </Route>
               <Route exact path="/about">
                 <About />
               </Route>
-              <Route exact path="/login">
-                <Login showAlert={showAlert} />
+              <Route exact path="/home">
+                <Home showAlert={showAlert} />
               </Route>
               <Route exact path="/signup">
                 <Signup showAlert={showAlert} />

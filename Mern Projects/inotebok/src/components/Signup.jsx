@@ -23,8 +23,8 @@ const Signup = (props) => {
         if (json.success) {
             // Save the auth token and redirect
             localStorage.setItem('authToken', json.authToken);
-            history.push("/");
             props.showAlert("Welcome to INotebook", "success");
+            history.push("/home");
         }
         else {
             props.showAlert("Invalid Details", "danger");
@@ -36,7 +36,8 @@ const Signup = (props) => {
     };
 
     return (
-        <div>
+        <div className="mt-2">
+            <h2 className="mb-4">Create an Account for accessing iNotebook</h2>
             <form className="container" onSubmit={handleSubmit}>
                 <div className="my-2">
                     <div className="form-floating mb-3">

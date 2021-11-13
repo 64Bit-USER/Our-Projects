@@ -9,7 +9,7 @@ const Login = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch(`${url}/api/auth/login`, {
+        const response = await fetch(`${url}/api/auth/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ const Login = (props) => {
             // Save the auth token and redirect
             localStorage.setItem('authToken', json.authToken);
             props.showAlert("Welcome Back to INotebook", "success");
-            history.push("/");
+            history.push("/home");
         }
         else {
             props.showAlert("Invalid Credentials", "danger");
@@ -33,7 +33,8 @@ const Login = (props) => {
     };
 
     return (
-        <>
+        <div className="mt-2">
+            <h2 className="mb-4">Login To Save Your Notes</h2>
             <form onSubmit={handleSubmit}>
                 <div className="my-2">
                     <div className="form-floating mb-3">
@@ -47,7 +48,7 @@ const Login = (props) => {
                 </div>
                 <button type="submit" className="btn btn-primary" >Login</button>
             </form>
-        </>
+        </div>
     )
 }
 
